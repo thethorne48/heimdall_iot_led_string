@@ -1,0 +1,54 @@
+#!/bin/sh -e
+
+HOST_URL_VAR="host_url"
+CERTIFICATE_ID_VAR="certificate_id"
+CERTIFICATE_PATH_VAR="certificate_path"
+CLIENT_ID_VAR="client_id"
+CA_FILE_NAME_VAR="ca_file_name"
+
+HOST_URL="$(snapctl get $HOST_URL_VAR)"
+CERTIFICATE_ID="$(snapctl get $CERTIFICATE_ID_VAR)"
+CERTIFICATE_PATH="$(snapctl get $CERTIFICATE_PATH_VAR)"
+CLIENT_ID="$(snapctl get $CLIENT_ID_VAR)"
+CA_FILE_NAME="$(snapctl get $CA_FILE_NAME_VAR)"
+
+if [ -z "$CERTIFICATE_ID" ]; then
+    echo "$CERTIFICATE_ID_VAR is a required attribute"
+		echo "Enter the prefix to the certificate bundle AWS IoT provided for this 'Thing':"
+		read CERTIFICATE_ID
+		snapctl set $CERTIFICATE_ID_VAR=$CERTIFICATE_ID
+fi
+if [ -z "$HOST_URL" ]; then
+    echo "$HOST_URL_VAR is a required attribute"
+		echo "Enter your AWS IoT Host URL:"
+		read HOST_URL
+		snapctl set $HOST_URL_VAR=$HOST_URL
+fi
+if [ -z "$CA_FILE_NAME"]; then
+    CA_FILE_NAME="AmazonRootCA1.pem"
+		echo "No $CA_FILE_NAME_VAR argument set, defaulted to $CA_FILE_NAME"
+		snapctl set $CA_FILE_NAME_VAR=$CA_FILE_NAME
+fi
+if [ -z "$CERTIFICATE_PATH"]; then
+    CERTIFICATE_PATH="~/.iot_certs"
+		echo "No $CERTIFICATE_PATH_VAR argument set, defaulted to $CERTIFICATE_PATH"
+		snapctl set $CERTIFICATE_PATH_VAR=$CERTIFICATE_PATH
+fi
+if [ -z "$CLIENT_ID" ]; then
+    CLIENT_ID="LEDController"
+		echo "No $CLIENT_ID_VAR argument set, defaulted to $CLIENT_ID"
+		snapctl set $CLIENT_ID_VAR=$CLIENT_ID
+fi
+
+opts_dir="$SNAP_DATA/options"
+mkdir -m 0600 $opts_dir
+
+tee $opts_dir/config.json <<EOF > /dev/null
+{
+	"HOST_URL":"$HOST_URL",
+	"CERTIFICATE_ID":"$CERTIFICATE_ID",
+	"CERTIFICATE_PATH":"$CERTIFICATE_PATH",
+	"CLIENT_ID":"$CLIENT_ID",
+	"CA_FILE_NAME":"$CA_FILE_NAME"
+}
+EOF

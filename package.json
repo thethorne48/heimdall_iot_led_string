@@ -1,6 +1,6 @@
 {
-  "name": "iot",
-  "version": "1.0.0",
+  "name": "heimdall-ledstring",
+  "version": "0.0.0",
   "description": "Runs the AWS IoT service for receiving LED light commands",
   "repository": {
     "type": "git",
@@ -11,10 +11,9 @@
     "start": "node index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "author": "",
+  "author": "the.thorne48@gmail.com",
   "license": "ISC",
   "dependencies": {
-    "aws-iot-device-sdk": "^2.2.1",
-    "dotenv": "^8.1.0"
+    "aws-iot-device-sdk": "^2.2.1"
   }
 }

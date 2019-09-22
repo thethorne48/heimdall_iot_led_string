@@ -1,19 +1,25 @@
-require('dotenv').config()
 const resolve = require('path').resolve
+
+const config = require(process.env.OPTS_JSON)
 
 const ThingShadow = require('aws-iot-device-sdk').thingShadow
 // const Device = require('aws-iot-device-sdk').device
 // const Jobs = require('aws-iot-device-sdk').jobs
 
-const thingName = 'LEDController'
-console.log(process.env.KEY_PATH)
+const HOST_URL = config.HOST_URL
+const CLIENT_ID = config.CLIENT_ID
+const CA_FILE_NAME = config.CA_FILE_NAME
+const CERTIFICATE_ID = config.CERTIFICATE_ID
+const CERTIFICATE_PATH = config.CERTIFICATE_PATH
+const CERTIFICATE_PREFIX = resolve(`${CERTIFICATE_PATH}/${CERTIFICATE_ID}`)
+
 const shadow = new ThingShadow({
-  keyPath: resolve(process.env.KEY_PATH),
-  certPath: resolve(process.env.CERT_PATH),
-  caPath: resolve(process.env.CA_PATH),
-  clientId: process.env.CLIENT_ID,
-  host: process.env.HOST,
-  offlineQueueMaxSize: 100,
+  keyPath: `${CERTIFICATE_PREFIX}-private.key.pem`,
+  certPath: `${CERTIFICATE_PREFIX}-certificate.pem.crt`,
+  caPath: `${CERTIFICATE_PATH}/${CA_FILE_NAME}`,
+  clientId: CLIENT_ID,
+  host: HOST_URL,
+  offlineQueueMaxSize: 50,
   offlineQueueDropBehavior: 'oldest',
 })
 
