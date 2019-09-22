@@ -1,0 +1,20 @@
+name: heimdall-iot-led-string # you probably want to 'snapcraft register <name>'
+base: core18 # the base snap is the execution environment for this snap
+version: '0.0+git' # just for humans, typically '1.2+git' or '1.3.2'
+summary: Leverages AWS IoT to receive colors for an LED strip # 79 char long summary
+description: |
+  AWS IoT is used to transmit arrays of colors to transfer to an LED string
+
+grade: devel # must be 'stable' to release into candidate/stable channels
+confinement: devmode # use 'strict' once you have the right plugs and slots
+
+parts:
+  client:
+    plugin: nodejs
+    nodejs-version: '12.10.0'
+    nodejs-package-manager: npm
+    source: .
+  
+apps:
+  heimdall-iot-led-string:
+    command: node index.js

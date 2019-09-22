@@ -1,0 +1,20 @@
+{
+  "name": "iot",
+  "version": "1.0.0",
+  "description": "Runs the AWS IoT service for receiving LED light commands",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/thethorne48/IoT_aws_led.git"
+  },
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "aws-iot-device-sdk": "^2.2.1",
+    "dotenv": "^8.1.0"
+  }
+}
