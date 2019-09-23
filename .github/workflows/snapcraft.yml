@@ -17,14 +17,7 @@ jobs:
       run: |
         snapcraft
         mkdir snap_build
-        mv *.snap snap_build
-
-  publish:
-    container: cibuilds/snapcraft:stable
-    runs-on: ubuntu-latest
-    needs: build
-    steps:
-    - uses: actions/checkout@v1
+        cp -r *.snap snap_build
     - uses: actions/upload-artifact@master
       with:
         name: heimdall-ledstring.snap
