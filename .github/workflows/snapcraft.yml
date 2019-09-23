@@ -19,6 +19,8 @@ jobs:
     - name: Build with snapcraft
       run: |
         snapcraft
+        mkdir snap_build
+        mv *.snap snap_build
 
   publish:
     container: cibuilds/snapcraft:stable
@@ -28,7 +30,7 @@ jobs:
     - uses: actions/upload-artifact@master
       with:
         name: heimdall-ledstring.snap
-        path: *.snap
+        path: snap_build
     - name: Publish with snapcraft
       env:
         SNAPCRAFT_LOGIN_FILE: ${{ secrets.SNAPCRAFT_LOGIN_FILE }}
