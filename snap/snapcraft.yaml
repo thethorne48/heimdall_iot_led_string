@@ -49,4 +49,4 @@ apps:
     environment:
       OPTS_JSON: $SNAP_DATA/options/config.json
     daemon: simple
-    command: node index.js
+    command: heimdall-ledstring

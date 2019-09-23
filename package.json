@@ -2,11 +2,14 @@
   "name": "heimdall-ledstring",
   "version": "0.0.0",
   "description": "Runs the AWS IoT service for receiving LED light commands",
+  "bin": {
+    "heimdall-ledstring": "heimdall-ledstring.js"
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/thethorne48/IoT_aws_led.git"
   },
-  "main": "index.js",
+  "main": "heimdall-ledstring.js",
   "scripts": {
     "start": "node index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
