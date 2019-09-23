@@ -1,6 +1,7 @@
 const resolve = require('path').resolve
 
-const config = require(process.env.OPTS_JSON)
+const checkConfig = require('./checkConfig')
+const config = checkConfig(require(process.env.OPTS_JSON))
 
 const ThingShadow = require('aws-iot-device-sdk').thingShadow
 // const Device = require('aws-iot-device-sdk').device
