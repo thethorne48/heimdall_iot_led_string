@@ -1,10 +1,10 @@
 #!/bin/sh -e
 
-HOST_URL_VAR="host_url"
-CERTIFICATE_ID_VAR="certificate_id"
-CERTIFICATE_PATH_VAR="certificate_path"
-CLIENT_ID_VAR="client_id"
-CA_FILE_NAME_VAR="ca_file_name"
+HOST_URL_VAR="host-url"
+CERTIFICATE_ID_VAR="certificate-id"
+CERTIFICATE_PATH_VAR="certificate-path"
+CLIENT_ID_VAR="client-id"
+CA_FILE_NAME_VAR="ca-file"
 
 HOST_URL="$(snapctl get $HOST_URL_VAR)"
 CERTIFICATE_ID="$(snapctl get $CERTIFICATE_ID_VAR)"
