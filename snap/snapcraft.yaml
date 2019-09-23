@@ -1,6 +1,6 @@
 name: heimdall-ledstring
 base: core18
-version: '0.0+git'
+version: '0.1+git'
 summary: Leverages AWS IoT to receive colors for an LED strip
 description: |
   AWS IoT is used to transmit arrays of colors to transfer to an LED string.
