@@ -15,15 +15,11 @@ CA_FILE_NAME="$(snapctl get $CA_FILE_NAME_VAR)"
 if [ -z "$CERTIFICATE_ID" ]; then
     echo "$CERTIFICATE_ID_VAR is a required attribute"
     echo "$CERTIFICATE_ID_VAR will prompt you for a value on first run"
-		# echo "Enter the prefix to the certificate bundle AWS IoT provided for this 'Thing':"
-		# read CERTIFICATE_ID
 		snapctl set $CERTIFICATE_ID_VAR=$CERTIFICATE_ID
 fi
 if [ -z "$HOST_URL" ]; then
     echo "$HOST_URL_VAR is a required attribute"
     echo "$HOST_URL_VAR will prompt you for a value on first run"
-		# echo "Enter your AWS IoT Host URL:"
-		# read HOST_URL
 		snapctl set $HOST_URL_VAR=""
 fi
 if [ -z "$CA_FILE_NAME"]; then
