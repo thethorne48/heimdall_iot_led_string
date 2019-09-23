@@ -20,10 +20,10 @@ description: |
     private.pem.key
     AmazonRootCA1.pem
 
-# architectures:
-#   - amd64
-#   - arm64
-#   - armhf
+architectures:
+  - amd64
+  - arm64
+  - armhf
 
 hooks:
   install:
