@@ -21,9 +21,9 @@ description: |
     AmazonRootCA1.pem
 
 architectures:
+  - armhf
   - amd64
   - arm64
-  - armhf
 
 hooks:
   install:
