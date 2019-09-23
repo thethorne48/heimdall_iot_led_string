@@ -40,7 +40,7 @@ if [ -z "$CLIENT_ID" ]; then
 		snapctl set $CLIENT_ID_VAR=$CLIENT_ID
 fi
 
-opts_dir="$SNAP_DATA/options"
+opts_dir="$SNAP_USER_DATA/options"
 mkdir -m 0600 $opts_dir
 
 tee $opts_dir/config.json <<EOF > /dev/null

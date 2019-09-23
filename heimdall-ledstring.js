@@ -10,7 +10,7 @@ const HOST_URL = config.HOST_URL
 const CLIENT_ID = config.CLIENT_ID
 const CA_FILE_NAME = config.CA_FILE_NAME
 const CERTIFICATE_ID = config.CERTIFICATE_ID
-const CERTIFICATE_PATH = config.CERTIFICATE_PATH
+const CERTIFICATE_PATH = resolve(`${process.env.SNAP_USER_DATA}/${config.CERTIFICATE_PATH}`)
 const CERTIFICATE_PREFIX = resolve(`${CERTIFICATE_PATH}/${CERTIFICATE_ID}`)
 
 const shadow = new ThingShadow({

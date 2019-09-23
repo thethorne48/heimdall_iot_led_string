@@ -30,12 +30,6 @@ hooks:
       plugs: 
         - network
 
-plugs:
-  ledstring-certs:
-    interface: personal-files
-    read:
-      - $HOME/.iot_certs
-
 grade: devel # must be 'stable' to release into candidate/stable channels
 confinement: devmode # use 'strict' once you have the right plugs and slots
 
@@ -52,6 +46,6 @@ apps:
       - ledstring-certs
       - network
     environment:
-      OPTS_JSON: $SNAP_DATA/options/config.json
+      OPTS_JSON: $SNAP_USER_DATA/options/config.json
     daemon: simple
     command: heimdall-ledstring
