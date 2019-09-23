@@ -43,7 +43,6 @@ parts:
 apps:
   heimdall-ledstring:
     plugs:
-      - ledstring-certs
       - network
     environment:
       OPTS_JSON: $SNAP_USER_DATA/options/config.json
