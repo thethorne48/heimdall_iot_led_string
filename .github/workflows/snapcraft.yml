@@ -18,6 +18,7 @@ jobs:
         snapcraft
         mkdir snap_build
         cp -r *.snap snap_build
+        echo ${{ github.ref }}
     - uses: actions/upload-artifact@master
       with:
         name: heimdall-ledstring.snap
