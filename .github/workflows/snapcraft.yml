@@ -24,7 +24,7 @@ jobs:
         name: heimdall-ledstring.snap
         path: snap_build
     - name: Publish Edge with snapcraft
-      if: startsWith(github.ref, 'feature/')
+      if: startsWith(github.ref, 'refs/heads/feature/')
       env:
         SNAPCRAFT_LOGIN_FILE: ${{ secrets.SNAPCRAFT_LOGIN_FILE }}
       run: |
@@ -32,7 +32,7 @@ jobs:
         echo $SNAPCRAFT_LOGIN_FILE | base64 --decode --ignore-garbage > .snapcraft/snapcraft.cfg
         snapcraft push *.snap --release edge
     - name: Publish Beta with snapcraft
-      if: startsWith(github.ref, 'wip/')
+      if: startsWith(github.ref, 'refs/heads/wip/')
       env:
         SNAPCRAFT_LOGIN_FILE: ${{ secrets.SNAPCRAFT_LOGIN_FILE }}
       run: |
@@ -40,7 +40,7 @@ jobs:
         echo $SNAPCRAFT_LOGIN_FILE | base64 --decode --ignore-garbage > .snapcraft/snapcraft.cfg
         snapcraft push *.snap --release beta
     - name: Publish Candidate with snapcraft
-      if: startsWith(github.ref, 'dev')
+      if: startsWith(github.ref, 'refs/heads/dev')
       env:
         SNAPCRAFT_LOGIN_FILE: ${{ secrets.SNAPCRAFT_LOGIN_FILE }}
       run: |
@@ -48,7 +48,7 @@ jobs:
         echo $SNAPCRAFT_LOGIN_FILE | base64 --decode --ignore-garbage > .snapcraft/snapcraft.cfg
         snapcraft push *.snap --release candidate
     - name: Publish Stable with snapcraft
-      if: startsWith(github.ref, 'master')
+      if: startsWith(github.ref, 'refs/heads/master')
       env:
         SNAPCRAFT_LOGIN_FILE: ${{ secrets.SNAPCRAFT_LOGIN_FILE }}
       run: |
