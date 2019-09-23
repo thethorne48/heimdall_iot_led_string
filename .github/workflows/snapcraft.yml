@@ -22,7 +22,32 @@ jobs:
       with:
         name: heimdall-ledstring.snap
         path: snap_build
-    - name: Publish with snapcraft
+    - name: Publish Edge with snapcraft
+      if: startsWith(github.ref, 'feature/')
+      env:
+        SNAPCRAFT_LOGIN_FILE: ${{ secrets.SNAPCRAFT_LOGIN_FILE }}
+      run: |
+        mkdir .snapcraft
+        echo $SNAPCRAFT_LOGIN_FILE | base64 --decode --ignore-garbage > .snapcraft/snapcraft.cfg
+        snapcraft push *.snap --release edge
+    - name: Publish Beta with snapcraft
+      if: startsWith(github.ref, 'wip/')
+      env:
+        SNAPCRAFT_LOGIN_FILE: ${{ secrets.SNAPCRAFT_LOGIN_FILE }}
+      run: |
+        mkdir .snapcraft
+        echo $SNAPCRAFT_LOGIN_FILE | base64 --decode --ignore-garbage > .snapcraft/snapcraft.cfg
+        snapcraft push *.snap --release beta
+    - name: Publish Candidate with snapcraft
+      if: startsWith(github.ref, 'dev')
+      env:
+        SNAPCRAFT_LOGIN_FILE: ${{ secrets.SNAPCRAFT_LOGIN_FILE }}
+      run: |
+        mkdir .snapcraft
+        echo $SNAPCRAFT_LOGIN_FILE | base64 --decode --ignore-garbage > .snapcraft/snapcraft.cfg
+        snapcraft push *.snap --release candidate
+    - name: Publish Stable with snapcraft
+      if: startsWith(github.ref, 'master')
       env:
         SNAPCRAFT_LOGIN_FILE: ${{ secrets.SNAPCRAFT_LOGIN_FILE }}
       run: |
