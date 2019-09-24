@@ -37,7 +37,7 @@ if [ -z "$CERTIFICATE_PATH" ]; then
 fi
 
 opts_dir="$SNAP_USER_DATA/options"
-mkdir -m 0600 $opts_dir
+mkdir -p -m 0600 $opts_dir
 
 tee $opts_dir/config.json <<EOF > /dev/null
 {
