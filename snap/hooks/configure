@@ -51,7 +51,7 @@ else
 fi
 
 opts_dir="$SNAP_USER_DATA/options"
-mkdir -p -m 0666 $opts_dir
+mkdir -p -m 0600 $opts_dir
 
 tee $opts_dir/config.json <<EOF > /dev/null
 {
