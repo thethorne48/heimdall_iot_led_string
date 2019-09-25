@@ -13,9 +13,6 @@ jobs:
         os: [ ubuntu-latest ]    
     steps:
     - uses: actions/checkout@v1
-    - name: Try with snapcraft
-      run: |
-        snapcraft try ./prime --devmode
     - name: Build with snapcraft
       run: |
         snapcraft
