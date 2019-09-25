@@ -6,7 +6,7 @@ const ThingShadow = require('aws-iot-device-sdk').thingShadow
 // const Jobs = require('aws-iot-device-sdk').jobs
 
 async function main() {
-  const config = await checkConfig(require(process.env.OPTS_JSON)).then(config => config)
+  const config = await checkConfig(require(process.env.OPTS_JSON))
 
   const HOST_URL = config.HOST_URL
   const CLIENT_ID = config.CLIENT_ID

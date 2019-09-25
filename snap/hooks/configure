@@ -43,7 +43,7 @@ else
 fi
 
 if [ -z "$CERTIFICATE_PATH" ]; then
-    CERTIFICATE_PATH="~/.iot_certs"
+    CERTIFICATE_PATH=".iot_certs"
 		echo "No $CERTIFICATE_PATH_VAR argument set, defaulted to $CERTIFICATE_PATH"
 		snapctl set $CERTIFICATE_PATH_VAR=$CERTIFICATE_PATH
 else
