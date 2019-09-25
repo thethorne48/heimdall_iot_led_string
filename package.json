@@ -11,7 +11,7 @@
   },
   "main": "heimdall-ledstring.js",
   "scripts": {
-    "start": "node index.js",
+    "start": "node heimdall-ledstring.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "the.thorne48@gmail.com",

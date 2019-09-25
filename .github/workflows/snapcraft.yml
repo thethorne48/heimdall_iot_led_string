@@ -19,10 +19,10 @@ jobs:
         mkdir snap_build
         cp -r *.snap snap_build
         echo ${{ github.ref }}
-    - uses: actions/upload-artifact@master
-      with:
-        name: heimdall-ledstring.snap
-        path: snap_build
+    # - uses: actions/upload-artifact@master
+    #   with:
+    #     name: heimdall-ledstring.snap
+    #     path: snap_build
     - name: Publish Edge with snapcraft
       if: startsWith(github.ref, 'refs/heads/feature/')
       env:
