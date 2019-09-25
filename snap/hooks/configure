@@ -1,10 +1,10 @@
 #!/bin/sh -e
 
-HOST_URL_VAR="host_url"
-CERTIFICATE_ID_VAR="certificate_id"
-CERTIFICATE_PATH_VAR="certificate_path"
-CLIENT_ID_VAR="client_id"
-CA_FILE_NAME_VAR="ca_file_name"
+HOST_URL_VAR="host-url"
+CERTIFICATE_ID_VAR="certificate-id"
+CERTIFICATE_PATH_VAR="certificate-path"
+CLIENT_ID_VAR="client-id"
+CA_FILE_NAME_VAR="ca-file"
 
 HOST_URL="$(snapctl get $HOST_URL_VAR)"
 CERTIFICATE_ID="$(snapctl get $CERTIFICATE_ID_VAR)"
@@ -13,35 +13,45 @@ CLIENT_ID="$(snapctl get $CLIENT_ID_VAR)"
 CA_FILE_NAME="$(snapctl get $CA_FILE_NAME_VAR)"
 
 if [ -z "$CERTIFICATE_ID" ]; then
-    echo "$CERTIFICATE_ID_VAR is a required attribute"
-		echo "Enter the prefix to the certificate bundle AWS IoT provided for this 'Thing':"
-		read CERTIFICATE_ID
+    echo "$CERTIFICATE_ID_VAR is a required attribute. $CERTIFICATE_ID_VAR will prompt you for a value on first run"
 		snapctl set $CERTIFICATE_ID_VAR=$CERTIFICATE_ID
+else
+	echo "$CERTIFICATE_ID_VAR argument set, set to $CERTIFICATE_ID_VAR"
 fi
+
 if [ -z "$HOST_URL" ]; then
-    echo "$HOST_URL_VAR is a required attribute"
-		echo "Enter your AWS IoT Host URL:"
-		read HOST_URL
-		snapctl set $HOST_URL_VAR=$HOST_URL
+    echo "$HOST_URL_VAR is a required attribute. $HOST_URL_VAR will prompt you for a value on first run"
+		snapctl set $HOST_URL_VAR=""
+else
+	echo "$HOST_URL_VAR argument set, set to $HOST_URL_VAR"
 fi
-if [ -z "$CA_FILE_NAME"]; then
-    CA_FILE_NAME="AmazonRootCA1.pem"
-		echo "No $CA_FILE_NAME_VAR argument set, defaulted to $CA_FILE_NAME"
-		snapctl set $CA_FILE_NAME_VAR=$CA_FILE_NAME
+
+if [ -z "$CA_FILE_NAME" ]; then
+	CA_FILE_NAME="AmazonRootCA1.pem"
+	echo "No $CA_FILE_NAME_VAR argument set, defaulted to $CA_FILE_NAME"
+	snapctl set $CA_FILE_NAME_VAR=""
+else
+	echo "$CA_FILE_NAME_VAR argument set, set to $CA_FILE_NAME"
 fi
-if [ -z "$CERTIFICATE_PATH"]; then
-    CERTIFICATE_PATH="~/.iot_certs"
-		echo "No $CERTIFICATE_PATH_VAR argument set, defaulted to $CERTIFICATE_PATH"
-		snapctl set $CERTIFICATE_PATH_VAR=$CERTIFICATE_PATH
-fi
+
 if [ -z "$CLIENT_ID" ]; then
     CLIENT_ID="LEDController"
 		echo "No $CLIENT_ID_VAR argument set, defaulted to $CLIENT_ID"
 		snapctl set $CLIENT_ID_VAR=$CLIENT_ID
+else
+	echo "$CLIENT_ID_VAR argument set, set to $CLIENT_ID"
+fi
+
+if [ -z "$CERTIFICATE_PATH" ]; then
+    CERTIFICATE_PATH=".iot_certs"
+		echo "No $CERTIFICATE_PATH_VAR argument set, defaulted to $CERTIFICATE_PATH"
+		snapctl set $CERTIFICATE_PATH_VAR=$CERTIFICATE_PATH
+else
+	echo "$CERTIFICATE_PATH_VAR argument set, set to $CERTIFICATE_PATH"
 fi
 
 opts_dir="$SNAP_USER_DATA/options"
-mkdir -m 0600 $opts_dir
+mkdir -p -m 0600 $opts_dir
 
 tee $opts_dir/config.json <<EOF > /dev/null
 {
@@ -52,3 +62,5 @@ tee $opts_dir/config.json <<EOF > /dev/null
 	"CA_FILE_NAME":"$CA_FILE_NAME"
 }
 EOF
+
+cat $opts_dir/config.json
