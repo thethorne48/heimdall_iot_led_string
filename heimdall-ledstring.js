@@ -16,7 +16,7 @@ async function main() {
   const CERTIFICATE_PREFIX = resolve(`${CERTIFICATE_PATH}/${CERTIFICATE_ID}`)
 
   const shadow = new ThingShadow({
-    keyPath: `${CERTIFICATE_PREFIX}-private.key.pem`,
+    keyPath: `${CERTIFICATE_PREFIX}-private.pem.key`,
     certPath: `${CERTIFICATE_PREFIX}-certificate.pem.crt`,
     caPath: `${CERTIFICATE_PATH}/${CA_FILE_NAME}`,
     clientId: CLIENT_ID,
@@ -26,7 +26,7 @@ async function main() {
   })
 
   shadow.on('connect', () => {
-    shadow.register(thingName, {}, () => {
+    shadow.register(CLIENT_ID, {}, () => {
       const state = {
         state: {
           desired: {
@@ -37,21 +37,21 @@ async function main() {
         },
       }
 
-      const tokenUpdate = shadow.update(thingName, state)
+      const tokenUpdate = shadow.update(CLIENT_ID, state)
       if (tokenUpdate === null) {
         console.log('update shadow failed, operation still in progress')
       } else {
         console.log(`Token received: ${tokenUpdate}`)
       }
 
-      shadow.publish('test_topic', JSON.stringify({ from: thingName }), { qos: 0 }, () => {
+      shadow.publish('test_topic', JSON.stringify({ from: CLIENT_ID }), { qos: 0 }, () => {
         console.log(`publish successful`)
       })
     })
   })
 
-  shadow.on('status', (thingName, stat, clientToken, stateObject) => {
-    console.log(`received ${stat} (token: ${clientToken}) on ${thingName}: ${JSON.stringify(stateObject)}`)
+  shadow.on('status', (CLIENT_ID, stat, clientToken, stateObject) => {
+    console.log(`received ${stat} (token: ${clientToken}) on ${CLIENT_ID}: ${JSON.stringify(stateObject)}`)
   })
 
   shadow.on('delta', (thing, state) => {
@@ -62,7 +62,7 @@ async function main() {
     console.log(`Received timeout on ${thing} with token: ${clientToken}`)
   })
 
-  shadow.subscribe(`home/things/${thingName}/led/set`, { qos: 0 }, (err, granted) => {
+  shadow.subscribe(`home/things/${CLIENT_ID}/led/set`, { qos: 0 }, (err, granted) => {
     if (err) {
       console.log(err.message)
     }
