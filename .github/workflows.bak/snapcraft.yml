@@ -1,0 +1,58 @@
+name: CI
+
+on: [push]
+
+jobs:
+  build:
+    container: cibuilds/snapcraft:stable
+    name: Build on node ${{ matrix.node_version }} and ${{ matrix.os }}
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        node_version: [ 12 ]
+        os: [ ubuntu-latest ]    
+    steps:
+    - uses: actions/checkout@v1
+    - name: Build with snapcraft
+      run: |
+        snapcraft
+        mkdir snap_build
+        cp -r *.snap snap_build
+        echo ${{ github.ref }}
+    # - uses: actions/upload-artifact@master
+    #   with:
+    #     name: heimdall-ledstring.snap
+    #     path: snap_build
+    - name: Publish Edge with snapcraft
+      if: startsWith(github.ref, 'refs/heads/feature/')
+      env:
+        SNAPCRAFT_LOGIN_FILE: ${{ secrets.SNAPCRAFT_LOGIN_FILE }}
+      run: |
+        mkdir .snapcraft
+        echo $SNAPCRAFT_LOGIN_FILE | base64 --decode --ignore-garbage > .snapcraft/snapcraft.cfg
+        snapcraft push *.snap --release edge
+    - name: Publish Beta with snapcraft
+      if: startsWith(github.ref, 'refs/heads/wip/')
+      env:
+        SNAPCRAFT_LOGIN_FILE: ${{ secrets.SNAPCRAFT_LOGIN_FILE }}
+      run: |
+        mkdir .snapcraft
+        echo $SNAPCRAFT_LOGIN_FILE | base64 --decode --ignore-garbage > .snapcraft/snapcraft.cfg
+        snapcraft push *.snap --release beta
+    - name: Publish Candidate with snapcraft
+      if: startsWith(github.ref, 'refs/heads/dev')
+      env:
+        SNAPCRAFT_LOGIN_FILE: ${{ secrets.SNAPCRAFT_LOGIN_FILE }}
+      run: |
+        mkdir .snapcraft
+        echo $SNAPCRAFT_LOGIN_FILE | base64 --decode --ignore-garbage > .snapcraft/snapcraft.cfg
+        snapcraft push *.snap --release candidate
+    - name: Publish Stable with snapcraft
+      if: startsWith(github.ref, 'refs/heads/master')
+      env:
+        SNAPCRAFT_LOGIN_FILE: ${{ secrets.SNAPCRAFT_LOGIN_FILE }}
+      run: |
+        mkdir .snapcraft
+        echo $SNAPCRAFT_LOGIN_FILE | base64 --decode --ignore-garbage > .snapcraft/snapcraft.cfg
+        snapcraft push *.snap --release stable
+

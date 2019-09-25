@@ -20,26 +20,19 @@ description: |
     private.pem.key
     AmazonRootCA1.pem
 
-architectures:
-  - armhf
-  - amd64
-  - arm64
-
-hooks:
-  install:
-      plugs: 
-        - network
-
 grade: devel # must be 'stable' to release into candidate/stable channels
 confinement: devmode # use 'strict' once you have the right plugs and slots
 
+architectures:
+  - build-on: armhf
+
 parts:
-  client:
+  heimdall-ledstring:
     plugin: nodejs
     nodejs-version: '12.10.0'
     nodejs-package-manager: npm
     source: .
-  
+
 apps:
   heimdall-ledstring:
     plugs:

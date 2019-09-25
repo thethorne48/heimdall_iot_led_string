@@ -1,0 +1,7 @@
+{
+	"HOST_URL": "a3n0i8cujkdezq-ats.iot.us-east-1.amazonaws.com",
+	"CERTIFICATE_ID": "cd5404b512",
+	"CERTIFICATE_PATH": ".certs",
+	"CLIENT_ID": "LEDController",
+	"CA_FILE_NAME": "AmazonRootCA1.pem"
+}
