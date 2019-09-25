@@ -32,10 +32,6 @@ parts:
     nodejs-version: '12.10.0'
     nodejs-package-manager: npm
     source: .
-    stage-packages:
-      - libc6
-      - libgcc1
-      - libstdc++6
 
 apps:
   heimdall-ledstring:
