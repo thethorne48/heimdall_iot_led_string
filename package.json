@@ -17,6 +17,6 @@
   "author": "the.thorne48@gmail.com",
   "license": "ISC",
   "dependencies": {
-    "aws-iot-device-sdk": "^2.2.1"
+    "aws-iot-device-sdk": "^2.2.12"
   }
 }
